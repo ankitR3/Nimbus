@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id       String     @id @default(uuid())
+  name     String
+  email    String     @unique
+  password String
+  projects Projects[]
+}
+
+model Projects {
+  id          String       @id @default(uuid())
+  name        String
+  gitUrl      String
+  userId      String
+  user        User         @relation(fields: [userId], references: [id])
+  deployments Deployment[]
+  createdAt   DateTime     @default(now())
+}
+
+model Deployment {
+  id            String           @id @default(uuid())
+  status        DeploymentStatus @default(UPLOADING)
+  deploymentUrl String?
+  projectId     String
+  project       Projects         @relation(fields: [projectId], references: [id])
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}
+
+enum DeploymentStatus {
+  UPLOADING
+  QUEUED
+  BUILDING
+  DEPLOYED
+  FAILED
+}
