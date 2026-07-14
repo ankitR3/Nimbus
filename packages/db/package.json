@@ -19,10 +19,8 @@
     "@types/bun": "latest",
     "@types/node": "^26.1.1",
     "prisma": "^7.8.0",
-    "tsx": "^4.23.0"
-  },
-  "peerDependencies": {
-    "typescript": "^5.9.2"
+    "tsx": "^4.23.0",
+    "typescript": "^7.0.2"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",

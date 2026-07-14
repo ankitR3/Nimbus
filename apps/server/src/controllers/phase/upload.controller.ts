@@ -4,11 +4,18 @@ import cloneRepo from '../../services/git';
 import { pushToQueue } from '../../redis/redisQueue';
 
 export default async function uploadController(req: Request, res: Response) {
-    const { gitUrl, projectName, userId } = req.body;
+    const { gitUrl, projectName } = req.body;
+    const userId = req.user?.id;
 
-    if (!gitUrl || !projectName || !userId) {
+    if (!userId) {
+        return res.status(401).json({
+            message: 'unauthorized'
+        });
+    }
+
+    if (!gitUrl || !projectName) {
         return res.status(400).json({
-            message: 'gitUrl, projectName, and userId are required'
+            message: 'gitUrl and projectName are required'
         })
     }
 
