@@ -17,13 +17,14 @@ model User {
 }
 
 model Projects {
-  id          String   @id @default(uuid())
-  name        String
-  gitUrl      String
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  deployments Deployment[]
-  createdAt   DateTime @default(now())
+  id            String   @id @default(uuid())
+  name          String
+  gitUrl        String
+  rootDirectory String?
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  deployments   Deployment[]
+  createdAt     DateTime @default(now())
 }
 
 model Deployment {
