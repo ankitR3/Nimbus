@@ -35,6 +35,7 @@ export type Deployment = $Result.DefaultSelection<Prisma.$DeploymentPayload>
 export namespace $Enums {
   export const DeploymentStatus: {
   UPLOADING: 'UPLOADING',
+  AWAITING_CONFIG: 'AWAITING_CONFIG',
   QUEUED: 'QUEUED',
   BUILDING: 'BUILDING',
   DEPLOYED: 'DEPLOYED',
@@ -1260,7 +1261,7 @@ export namespace Prisma {
     id: string
     name: string
     email: string
-    password: string
+    password: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1327,7 +1328,7 @@ export namespace Prisma {
       id: string
       name: string
       email: string
-      password: string
+      password: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2205,6 +2206,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     gitUrl: string | null
+    rootDirectory: string | null
     userId: string | null
     createdAt: Date | null
   }
@@ -2213,6 +2215,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     gitUrl: string | null
+    rootDirectory: string | null
     userId: string | null
     createdAt: Date | null
   }
@@ -2221,6 +2224,7 @@ export namespace Prisma {
     id: number
     name: number
     gitUrl: number
+    rootDirectory: number
     userId: number
     createdAt: number
     _all: number
@@ -2231,6 +2235,7 @@ export namespace Prisma {
     id?: true
     name?: true
     gitUrl?: true
+    rootDirectory?: true
     userId?: true
     createdAt?: true
   }
@@ -2239,6 +2244,7 @@ export namespace Prisma {
     id?: true
     name?: true
     gitUrl?: true
+    rootDirectory?: true
     userId?: true
     createdAt?: true
   }
@@ -2247,6 +2253,7 @@ export namespace Prisma {
     id?: true
     name?: true
     gitUrl?: true
+    rootDirectory?: true
     userId?: true
     createdAt?: true
     _all?: true
@@ -2328,6 +2335,7 @@ export namespace Prisma {
     id: string
     name: string
     gitUrl: string
+    rootDirectory: string | null
     userId: string
     createdAt: Date
     _count: ProjectsCountAggregateOutputType | null
@@ -2353,6 +2361,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     gitUrl?: boolean
+    rootDirectory?: boolean
     userId?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2364,6 +2373,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     gitUrl?: boolean
+    rootDirectory?: boolean
     userId?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2373,6 +2383,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     gitUrl?: boolean
+    rootDirectory?: boolean
     userId?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -2382,11 +2393,12 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     gitUrl?: boolean
+    rootDirectory?: boolean
     userId?: boolean
     createdAt?: boolean
   }
 
-  export type ProjectsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "gitUrl" | "userId" | "createdAt", ExtArgs["result"]["projects"]>
+  export type ProjectsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "gitUrl" | "rootDirectory" | "userId" | "createdAt", ExtArgs["result"]["projects"]>
   export type ProjectsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     deployments?: boolean | Projects$deploymentsArgs<ExtArgs>
@@ -2409,6 +2421,7 @@ export namespace Prisma {
       id: string
       name: string
       gitUrl: string
+      rootDirectory: string | null
       userId: string
       createdAt: Date
     }, ExtArgs["result"]["projects"]>
@@ -2839,6 +2852,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Projects", 'String'>
     readonly name: FieldRef<"Projects", 'String'>
     readonly gitUrl: FieldRef<"Projects", 'String'>
+    readonly rootDirectory: FieldRef<"Projects", 'String'>
     readonly userId: FieldRef<"Projects", 'String'>
     readonly createdAt: FieldRef<"Projects", 'DateTime'>
   }
@@ -4388,6 +4402,7 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     gitUrl: 'gitUrl',
+    rootDirectory: 'rootDirectory',
     userId: 'userId',
     createdAt: 'createdAt'
   };
@@ -4502,7 +4517,7 @@ export namespace Prisma {
     id?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
-    password?: StringFilter<"User"> | string
+    password?: StringNullableFilter<"User"> | string | null
     projects?: ProjectsListRelationFilter
   }
 
@@ -4510,7 +4525,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
-    password?: SortOrder
+    password?: SortOrderInput | SortOrder
     projects?: ProjectsOrderByRelationAggregateInput
   }
 
@@ -4521,7 +4536,7 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
-    password?: StringFilter<"User"> | string
+    password?: StringNullableFilter<"User"> | string | null
     projects?: ProjectsListRelationFilter
   }, "id" | "email">
 
@@ -4529,7 +4544,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
-    password?: SortOrder
+    password?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -4542,7 +4557,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"User"> | string
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
-    password?: StringWithAggregatesFilter<"User"> | string
+    password?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type ProjectsWhereInput = {
@@ -4552,6 +4567,7 @@ export namespace Prisma {
     id?: StringFilter<"Projects"> | string
     name?: StringFilter<"Projects"> | string
     gitUrl?: StringFilter<"Projects"> | string
+    rootDirectory?: StringNullableFilter<"Projects"> | string | null
     userId?: StringFilter<"Projects"> | string
     createdAt?: DateTimeFilter<"Projects"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -4562,6 +4578,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     gitUrl?: SortOrder
+    rootDirectory?: SortOrderInput | SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -4575,6 +4592,7 @@ export namespace Prisma {
     NOT?: ProjectsWhereInput | ProjectsWhereInput[]
     name?: StringFilter<"Projects"> | string
     gitUrl?: StringFilter<"Projects"> | string
+    rootDirectory?: StringNullableFilter<"Projects"> | string | null
     userId?: StringFilter<"Projects"> | string
     createdAt?: DateTimeFilter<"Projects"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -4585,6 +4603,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     gitUrl?: SortOrder
+    rootDirectory?: SortOrderInput | SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     _count?: ProjectsCountOrderByAggregateInput
@@ -4599,6 +4618,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Projects"> | string
     name?: StringWithAggregatesFilter<"Projects"> | string
     gitUrl?: StringWithAggregatesFilter<"Projects"> | string
+    rootDirectory?: StringNullableWithAggregatesFilter<"Projects"> | string | null
     userId?: StringWithAggregatesFilter<"Projects"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Projects"> | Date | string
   }
@@ -4667,7 +4687,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     projects?: ProjectsCreateNestedManyWithoutUserInput
   }
 
@@ -4675,7 +4695,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
     projects?: ProjectsUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -4683,7 +4703,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     projects?: ProjectsUpdateManyWithoutUserNestedInput
   }
 
@@ -4691,7 +4711,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     projects?: ProjectsUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -4699,27 +4719,28 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ProjectsCreateInput = {
     id?: string
     name: string
     gitUrl: string
+    rootDirectory?: string | null
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutProjectsInput
     deployments?: DeploymentCreateNestedManyWithoutProjectInput
@@ -4729,6 +4750,7 @@ export namespace Prisma {
     id?: string
     name: string
     gitUrl: string
+    rootDirectory?: string | null
     userId: string
     createdAt?: Date | string
     deployments?: DeploymentUncheckedCreateNestedManyWithoutProjectInput
@@ -4738,6 +4760,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gitUrl?: StringFieldUpdateOperationsInput | string
+    rootDirectory?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutProjectsNestedInput
     deployments?: DeploymentUpdateManyWithoutProjectNestedInput
@@ -4747,6 +4770,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gitUrl?: StringFieldUpdateOperationsInput | string
+    rootDirectory?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deployments?: DeploymentUncheckedUpdateManyWithoutProjectNestedInput
@@ -4756,6 +4780,7 @@ export namespace Prisma {
     id?: string
     name: string
     gitUrl: string
+    rootDirectory?: string | null
     userId: string
     createdAt?: Date | string
   }
@@ -4764,6 +4789,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gitUrl?: StringFieldUpdateOperationsInput | string
+    rootDirectory?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -4771,6 +4797,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gitUrl?: StringFieldUpdateOperationsInput | string
+    rootDirectory?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4852,10 +4879,30 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type ProjectsListRelationFilter = {
     every?: ProjectsWhereInput
     some?: ProjectsWhereInput
     none?: ProjectsWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type ProjectsOrderByRelationAggregateInput = {
@@ -4901,6 +4948,24 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -4931,6 +4996,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     gitUrl?: SortOrder
+    rootDirectory?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
   }
@@ -4939,6 +5005,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     gitUrl?: SortOrder
+    rootDirectory?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
   }
@@ -4947,6 +5014,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     gitUrl?: SortOrder
+    rootDirectory?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
   }
@@ -4972,29 +5040,9 @@ export namespace Prisma {
     not?: NestedEnumDeploymentStatusFilter<$PrismaModel> | $Enums.DeploymentStatus
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type ProjectsScalarRelationFilter = {
     is?: ProjectsWhereInput
     isNot?: ProjectsWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type DeploymentCountOrderByAggregateInput = {
@@ -5034,24 +5082,6 @@ export namespace Prisma {
     _max?: NestedEnumDeploymentStatusFilter<$PrismaModel>
   }
 
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
   export type ProjectsCreateNestedManyWithoutUserInput = {
     create?: XOR<ProjectsCreateWithoutUserInput, ProjectsUncheckedCreateWithoutUserInput> | ProjectsCreateWithoutUserInput[] | ProjectsUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ProjectsCreateOrConnectWithoutUserInput | ProjectsCreateOrConnectWithoutUserInput[]
@@ -5068,6 +5098,10 @@ export namespace Prisma {
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type ProjectsUpdateManyWithoutUserNestedInput = {
@@ -5168,10 +5202,6 @@ export namespace Prisma {
     set?: $Enums.DeploymentStatus
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-  }
-
   export type ProjectsUpdateOneRequiredWithoutDeploymentsNestedInput = {
     create?: XOR<ProjectsCreateWithoutDeploymentsInput, ProjectsUncheckedCreateWithoutDeploymentsInput>
     connectOrCreate?: ProjectsCreateOrConnectWithoutDeploymentsInput
@@ -5192,6 +5222,20 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -5220,6 +5264,34 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -5254,20 +5326,6 @@ export namespace Prisma {
     not?: NestedEnumDeploymentStatusFilter<$PrismaModel> | $Enums.DeploymentStatus
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type NestedEnumDeploymentStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.DeploymentStatus | EnumDeploymentStatusFieldRefInput<$PrismaModel>
     in?: $Enums.DeploymentStatus[] | ListEnumDeploymentStatusFieldRefInput<$PrismaModel>
@@ -5278,38 +5336,11 @@ export namespace Prisma {
     _max?: NestedEnumDeploymentStatusFilter<$PrismaModel>
   }
 
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type ProjectsCreateWithoutUserInput = {
     id?: string
     name: string
     gitUrl: string
+    rootDirectory?: string | null
     createdAt?: Date | string
     deployments?: DeploymentCreateNestedManyWithoutProjectInput
   }
@@ -5318,6 +5349,7 @@ export namespace Prisma {
     id?: string
     name: string
     gitUrl: string
+    rootDirectory?: string | null
     createdAt?: Date | string
     deployments?: DeploymentUncheckedCreateNestedManyWithoutProjectInput
   }
@@ -5355,6 +5387,7 @@ export namespace Prisma {
     id?: StringFilter<"Projects"> | string
     name?: StringFilter<"Projects"> | string
     gitUrl?: StringFilter<"Projects"> | string
+    rootDirectory?: StringNullableFilter<"Projects"> | string | null
     userId?: StringFilter<"Projects"> | string
     createdAt?: DateTimeFilter<"Projects"> | Date | string
   }
@@ -5363,14 +5396,14 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
   }
 
   export type UserUncheckedCreateWithoutProjectsInput = {
     id?: string
     name: string
     email: string
-    password: string
+    password?: string | null
   }
 
   export type UserCreateOrConnectWithoutProjectsInput = {
@@ -5419,14 +5452,14 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateWithoutProjectsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DeploymentUpsertWithWhereUniqueWithoutProjectInput = {
@@ -5461,6 +5494,7 @@ export namespace Prisma {
     id?: string
     name: string
     gitUrl: string
+    rootDirectory?: string | null
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutProjectsInput
   }
@@ -5469,6 +5503,7 @@ export namespace Prisma {
     id?: string
     name: string
     gitUrl: string
+    rootDirectory?: string | null
     userId: string
     createdAt?: Date | string
   }
@@ -5493,6 +5528,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gitUrl?: StringFieldUpdateOperationsInput | string
+    rootDirectory?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutProjectsNestedInput
   }
@@ -5501,6 +5537,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gitUrl?: StringFieldUpdateOperationsInput | string
+    rootDirectory?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5509,6 +5546,7 @@ export namespace Prisma {
     id?: string
     name: string
     gitUrl: string
+    rootDirectory?: string | null
     createdAt?: Date | string
   }
 
@@ -5516,6 +5554,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gitUrl?: StringFieldUpdateOperationsInput | string
+    rootDirectory?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deployments?: DeploymentUpdateManyWithoutProjectNestedInput
   }
@@ -5524,6 +5563,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gitUrl?: StringFieldUpdateOperationsInput | string
+    rootDirectory?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deployments?: DeploymentUncheckedUpdateManyWithoutProjectNestedInput
   }
@@ -5532,6 +5572,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     gitUrl?: StringFieldUpdateOperationsInput | string
+    rootDirectory?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

@@ -12,7 +12,7 @@ model User {
   id        String    @id @default(uuid())
   name      String
   email     String    @unique
-  password  String
+  password  String?
   projects  Projects[]
 }
 
@@ -39,6 +39,7 @@ model Deployment {
 
 enum DeploymentStatus {
   UPLOADING
+  AWAITING_CONFIG
   QUEUED
   BUILDING
   DEPLOYED

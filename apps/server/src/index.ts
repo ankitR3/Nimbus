@@ -1,7 +1,7 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import phaseRoutes from './route/phase.route';
-import 'dotenv/config';
 
 const app = express();
 

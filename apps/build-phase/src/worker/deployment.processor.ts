@@ -17,6 +17,15 @@ export async function processDeployment(job: Job) {
         },
     });
 
+    const deployment = await prisma.deployment.findUnique({
+        where: {
+            id: deploymentId
+        },
+        include: {
+            project: true
+        },
+    });
+
     const sourcePath = path.join(process.cwd(), "..", "server", "tmp", deploymentId);
     const outputPath = path.join(process.cwd(), "..", "server", "output", deploymentId);
 
@@ -26,7 +35,9 @@ export async function processDeployment(job: Job) {
         await cleanupSource(sourcePath);
 
         await prisma.deployment.update({
-            where: { id: deploymentId },
+            where: {
+                id: deploymentId
+            },
             data: {
                 status: "DEPLOYED",
                 deploymentUrl: `${deploymentId}.localhost:4000`,

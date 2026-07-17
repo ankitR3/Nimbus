@@ -131,6 +131,7 @@ exports.Prisma.ProjectsScalarFieldEnum = {
   id: 'id',
   name: 'name',
   gitUrl: 'gitUrl',
+  rootDirectory: 'rootDirectory',
   userId: 'userId',
   createdAt: 'createdAt'
 };
@@ -160,6 +161,7 @@ exports.Prisma.NullsOrder = {
 };
 exports.DeploymentStatus = exports.$Enums.DeploymentStatus = {
   UPLOADING: 'UPLOADING',
+  AWAITING_CONFIG: 'AWAITING_CONFIG',
   QUEUED: 'QUEUED',
   BUILDING: 'BUILDING',
   DEPLOYED: 'DEPLOYED',
